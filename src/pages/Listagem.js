@@ -79,7 +79,6 @@ class Listagem extends React.Component {
             </button>
           ))}
         </div>
-
         {
           productsSearch.length > 0
             ? productsSearch.map((item) => (
@@ -90,7 +89,6 @@ class Listagem extends React.Component {
               </div>
             )) : <p>Nenhum produto foi encontrado</p>
         }
-
       </div>
     );
   }
