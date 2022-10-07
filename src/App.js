@@ -7,9 +7,9 @@ import CarrinhoDeCompras from './pages/CarrinhoDeCompras';
 function App() {
   return (
     <BrowserRouter>
-      <Listagem />
       <Switch>
-        <Route path="/CarrinhoDeCompras" component={ CarrinhoDeCompras } />
+        <Route exact path="/CarrinhoDeCompras" component={ CarrinhoDeCompras } />
+        <Route exact path="/" component={ Listagem } />
       </Switch>
     </BrowserRouter>
   );
