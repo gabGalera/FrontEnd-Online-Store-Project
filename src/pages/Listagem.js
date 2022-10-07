@@ -24,6 +24,15 @@ class Listagem extends React.Component {
     this.setState({ categories: arrayCategories });
   };
 
+  buttonCategories = async ({ target }) => {
+    const { id } = target;
+    const response = await getProductsFromCategoryAndQuery(id, '');
+    const { results } = response;
+    this.setState({
+      productsSearch: results,
+    });
+  };
+
   handleClick = async () => {
     const { search } = this.state;
     const response = await getProductsFromCategoryAndQuery('', search);
@@ -74,7 +83,13 @@ class Listagem extends React.Component {
         <div>
           <p>Categorias:</p>
           {categories.map((categoria) => (
-            <button type="button" key={ categoria.id } data-testid="category">
+            <button
+              type="button"
+              key={ categoria.id }
+              id={ categoria.id }
+              onClick={ this.buttonCategories }
+              data-testid="category"
+            >
               {categoria.name}
             </button>
           ))}
