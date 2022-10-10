@@ -50,6 +50,30 @@ class Listagem extends React.Component {
     });
   };
 
+  /*   cartAdd = ({ target }) => {
+    const { value } = target;
+    const { productsSearch } = this.state;
+    console.log(value);
+    this.setState((prev) => ({ cart: [...prev.cart, value] }));
+    const result = productsSearch.find((produto) => produto.id === value);
+    localStorage.setItem('Produto', JSON.stringify([...result, result]));
+  }; */
+  loadShoppingCart = () => JSON.parse(localStorage.getItem('produtos'));
+
+  saveShoppingCart = (product) => localStorage
+    .setItem('produtos', JSON.stringify(product));
+
+  cartAdd = ({ target }) => {
+    const { value } = target;
+    const { productsSearch } = this.state;
+    const result = productsSearch.find((produto) => produto.id === value);
+    const cart = this.loadShoppingCart();
+    if (cart) {
+      return this.saveShoppingCart([...cart, result]);
+    }
+    return this.saveShoppingCart([result]);
+  };
+
   render() {
     const { categories, productsSearch } = this.state;
     return (
@@ -111,6 +135,14 @@ class Listagem extends React.Component {
                   <img src={ item.thumbnail } alt={ item.name } />
                   <p>{item.price}</p>
                 </Link>
+                <button
+                  data-testid="product-add-to-cart"
+                  type="button"
+                  onClick={ this.cartAdd }
+                  value={ item.id }
+                >
+                  Adicionar ao Carrinho
+                </button>
               </div>
             )) : <p>Nenhum produto foi encontrado</p>
         }
