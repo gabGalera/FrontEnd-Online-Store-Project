@@ -4,6 +4,7 @@ import {
   getCategories,
   getProductsFromCategoryAndQuery,
 } from '../services/api';
+// import Detalhes from './Detalhes';
 
 class Listagem extends React.Component {
   constructor() {
@@ -97,10 +98,19 @@ class Listagem extends React.Component {
         {
           productsSearch.length > 0
             ? productsSearch.map((item) => (
-              <div data-testid="product" key={ item.id }>
-                <p>{item.title}</p>
-                <img src={ item.thumbnail } alt={ item.name } />
-                <p>{item.price}</p>
+              <div
+                data-testid="product"
+                key={ item.id }
+              >
+                <Link
+                  to={ `/Detalhes/${item.id}` }
+                  id={ item.id }
+                  data-testid="product-detail-link"
+                >
+                  <p>{item.title}</p>
+                  <img src={ item.thumbnail } alt={ item.name } />
+                  <p>{item.price}</p>
+                </Link>
               </div>
             )) : <p>Nenhum produto foi encontrado</p>
         }

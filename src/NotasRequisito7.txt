@@ -1,0 +1,8 @@
+// Notas Req-7 - Gabriel Galera:
+
+// 1 - Criei um componente chamado Detalhes.
+// 2 - Coloquei um Link para Detalhes dentro de productsSearch.map.
+// 3 - Passei o ID do produto como props (para isso modifiquei o arquivo App.js).
+// 4 - Pesquisei o produto por ID utilizando a função getProductId.
+// 5 - Coloquei as informações na tela
+// 6 - Coloquei o botão dentro de um Link que transfere para o Carrinho de Compras.
