@@ -23,15 +23,19 @@ class CarrinhoDeCompras extends React.Component {
       <div>
         {
           shoppingCart
-            ? shoppingCart.map((produto) => (
-              <div key={ produto.id }>
-                <p>
+            ? shoppingCart.map((produto, index) => (
+              <div key={ index }>
+                <p data-testid="shopping-cart-product-name">
                   { produto.title }
                 </p>
                 <p>
                   { produto.price }
                 </p>
-                {/*   {shoppingCart.filter((products) => products.id === produto.id)} */}
+                <p data-testid="shopping-cart-product-quantity">
+                  {
+                    shoppingCart.filter((item) => item.id === produto.id).length
+                  }
+                </p>
               </div>
             ))
             : <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
