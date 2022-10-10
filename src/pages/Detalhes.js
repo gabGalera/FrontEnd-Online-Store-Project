@@ -24,6 +24,20 @@ class Detalhes extends React.Component {
     });
   };
 
+  loadShoppingCart = () => JSON.parse(localStorage.getItem('produtos'));
+
+  saveShoppingCart = (product) => localStorage
+    .setItem('produtos', JSON.stringify(product));
+
+  handleClick = () => {
+    const { productsSearch } = this.state;
+    const cart = this.loadShoppingCart();
+    if (cart) {
+      return this.saveShoppingCart([...cart, productsSearch]);
+    }
+    return this.saveShoppingCart([productsSearch]);
+  };
+
   render() {
     const { productsSearch } = this.state;
 
@@ -38,6 +52,13 @@ class Detalhes extends React.Component {
           data-testid="product-detail-image"
         />
         <span data-testid="product-detail-price">{productsSearch.price}</span>
+        <button
+          data-testid="product-detail-add-to-cart"
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Add To Cart
+        </button>
         <Link to="/CarrinhoDeCompras">
           <button
             type="button"
