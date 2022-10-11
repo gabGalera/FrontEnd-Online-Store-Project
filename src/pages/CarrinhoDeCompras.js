@@ -86,7 +86,6 @@ class CarrinhoDeCompras extends React.Component {
                     type="button"
                     id={ produto.id }
                     onClick={ (e) => {
-                      // const { shoppingCart } = this.state;
                       const aux = shoppingCart
                         .filter((entry) => entry.id !== e.target.id);
                       this.setState({

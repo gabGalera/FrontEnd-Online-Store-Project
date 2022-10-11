@@ -14,6 +14,7 @@ class Detalhes extends Component {
       email: '',
       comments: '',
       rating: '',
+      numero: 0,
     };
   }
 
@@ -21,6 +22,7 @@ class Detalhes extends Component {
     const { id: { match: { params } } } = this.props;
     this.getProduct(params.id);
     this.getStorage(params.id);
+    this.numeroDeProdutosNoCarrinho();
   }
 
   getProduct = async (id) => {
@@ -38,6 +40,7 @@ class Detalhes extends Component {
   handleClick = () => {
     const { productsSearch } = this.state;
     const cart = this.loadShoppingCart();
+    this.numeroDeProdutosNoCarrinho();
     if (cart) {
       return this.saveShoppingCart([...cart, productsSearch]);
     }
@@ -120,8 +123,30 @@ class Detalhes extends Component {
     localStorage.setItem(id, JSON.stringify(avaliacao));
   };
 
+  numeroDeProdutosNoCarrinho = () => {
+    const produtos = this.loadShoppingCart();
+    if (produtos) {
+      let numero = produtos.map((produto) => produto.quantity);
+      numero = numero.reduce((soma, i) => soma + i);
+      console.log(numero);
+
+      this.setState({
+        numero,
+      });
+      return numero;
+    }
+    return 0;
+  };
+
   render() {
-    const { productsSearch, result, avaliacao, email, rating, comments } = this.state;
+    const {
+      productsSearch,
+      result,
+      avaliacao,
+      email,
+      rating,
+      comments,
+      numero } = this.state;
 
     return (
       <>
@@ -149,6 +174,12 @@ class Detalhes extends Component {
             Carrinho de Compras
           </button>
         </Link>
+        <div>
+          Número de produtos no carrinho:
+          <div data-testid="shopping-cart-size">
+            { `${numero}` }
+          </div>
+        </div>
         <form>
           <label htmlFor="avaliar">
             Avaliar
