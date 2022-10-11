@@ -140,6 +140,9 @@ class Listagem extends React.Component {
                   id={ item.id }
                   data-testid="product-detail-link"
                 >
+                  {item.shipping.free_shipping && (
+                    <p data-testid="free-shipping">Frete Grátis</p>
+                  )}
                   <p>{item.title}</p>
                   <img src={ item.thumbnail } alt={ item.name } />
                   <p>{item.price}</p>
