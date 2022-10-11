@@ -14,6 +14,7 @@ class Detalhes extends Component {
       email: '',
       comments: '',
       rating: '',
+      numero: 0,
     };
   }
 
@@ -21,6 +22,7 @@ class Detalhes extends Component {
     const { id: { match: { params } } } = this.props;
     this.getProduct(params.id);
     this.getStorage(params.id);
+    this.numeroDeProdutosNoCarrinho();
   }
 
   getProduct = async (id) => {
@@ -38,23 +40,17 @@ class Detalhes extends Component {
   handleClick = () => {
     const { productsSearch } = this.state;
     const cart = this.loadShoppingCart();
+    this.numeroDeProdutosNoCarrinho();
     if (cart) {
       return this.saveShoppingCart([...cart, productsSearch]);
     }
     return this.saveShoppingCart([productsSearch]);
   };
 
-  handleEmail = ({ target }) => {
-    const { value } = target;
+  handle = ({ target }) => {
+    const { value, name } = target;
     this.setState({
-      email: value,
-    });
-  };
-
-  handleComments = ({ target }) => {
-    const { value } = target;
-    this.setState({
-      comments: value,
+      [name]: value,
     });
   };
 
@@ -78,12 +74,7 @@ class Detalhes extends Component {
     const { email, comments, rating } = this.state;
     const emailRegex = /\S+@\S+\.\S+/;
     const emailVerify = emailRegex.test(email);
-    const commentsVerify = comments.length === 0;
     const ratingVerify = rating.length === 0;
-    console.log(emailVerify);
-    console.log(!commentsVerify);
-    console.log(!ratingVerify);
-
     if (emailVerify && !ratingVerify) {
       const avaliacaoObj = {
         email,
@@ -91,20 +82,17 @@ class Detalhes extends Component {
         rating,
       };
 
-      this.setState(
-        (prev) => ({
-          avaliacao: [...prev.avaliacao, avaliacaoObj],
-        }),
-        () => {
-          this.setStorage();
-          this.setState({
-            result: false,
-            email: '',
-            rating: '',
-            comments: '',
-          });
-        },
-      );
+      this.setState((prev) => ({
+        avaliacao: [...prev.avaliacao, avaliacaoObj],
+      }), () => {
+        this.setStorage();
+        this.setState({
+          result: false,
+          email: '',
+          rating: '',
+          comments: '',
+        });
+      });
     } else {
       this.setState({
         result: true,
@@ -113,15 +101,26 @@ class Detalhes extends Component {
   };
 
   setStorage = () => {
-    const {
-      avaliacao,
-      productsSearch: { id },
-    } = this.state;
+    const { avaliacao, productsSearch: { id } } = this.state;
     localStorage.setItem(id, JSON.stringify(avaliacao));
   };
 
+  numeroDeProdutosNoCarrinho = () => {
+    const produtos = this.loadShoppingCart();
+    if (produtos) {
+      const numero = produtos.map((produto) => produto.quantity)
+        .reduce((soma, i) => soma + i);
+      this.setState({
+        numero,
+      });
+      return numero;
+    }
+    return 0;
+  };
+
   render() {
-    const { productsSearch, result, avaliacao, email, rating, comments } = this.state;
+    const { productsSearch, result, avaliacao, email, rating, comments,
+      numero } = this.state;
 
     return (
       <>
@@ -149,6 +148,12 @@ class Detalhes extends Component {
             Carrinho de Compras
           </button>
         </Link>
+        <div>
+          Número de produtos no carrinho:
+          <div data-testid="shopping-cart-size">
+            { `${numero}` }
+          </div>
+        </div>
         <form>
           <label htmlFor="avaliar">
             Avaliar
@@ -201,13 +206,15 @@ class Detalhes extends Component {
               data-testid="product-detail-email"
               type="email"
               value={ email }
+              name="email"
               required
-              onChange={ this.handleEmail }
+              onChange={ this.handle }
             />
             <textarea
               data-testid="product-detail-evaluation"
+              name="comments"
               value={ comments }
-              onChange={ this.handleComments }
+              onChange={ this.handle }
             />
             <button
               type="button"
@@ -231,7 +238,6 @@ class Detalhes extends Component {
     );
   }
 }
-
 Detalhes.propTypes = {
   id: PropTypes.shape({
     match: PropTypes.shape({
@@ -241,5 +247,4 @@ Detalhes.propTypes = {
     }),
   }).isRequired,
 };
-
 export default Detalhes;

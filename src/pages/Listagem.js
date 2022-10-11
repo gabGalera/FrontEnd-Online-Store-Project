@@ -4,7 +4,6 @@ import {
   getCategories,
   getProductsFromCategoryAndQuery,
 } from '../services/api';
-// import Detalhes from './Detalhes';
 
 class Listagem extends React.Component {
   constructor() {
@@ -13,11 +12,13 @@ class Listagem extends React.Component {
       categories: [],
       search: '',
       productsSearch: [],
+      numero: 0,
     };
   }
 
   componentDidMount() {
     this.loadCategories();
+    this.numeroDeProdutosNoCarrinho();
   }
 
   loadCategories = async () => {
@@ -50,14 +51,6 @@ class Listagem extends React.Component {
     });
   };
 
-  /*   cartAdd = ({ target }) => {
-    const { value } = target;
-    const { productsSearch } = this.state;
-    console.log(value);
-    this.setState((prev) => ({ cart: [...prev.cart, value] }));
-    const result = productsSearch.find((produto) => produto.id === value);
-    localStorage.setItem('Produto', JSON.stringify([...result, result]));
-  }; */
   loadShoppingCart = () => JSON.parse(localStorage.getItem('produtos'));
 
   saveShoppingCart = (product) => localStorage
@@ -68,23 +61,44 @@ class Listagem extends React.Component {
     const { productsSearch } = this.state;
     const result = productsSearch.find((produto) => produto.id === value);
     const cart = this.loadShoppingCart();
-    // result.quantity = 0;
     if (cart) {
       if (cart.find((item) => item.id === value)) {
-        cart.quantity += 1;
-        return this.saveShoppingCart([...cart]);
+        const item = cart.find((produto) => produto.id === value);
+        item.quantity += 1;
+        console.log(item.quantity);
+        this.numeroDeProdutosNoCarrinho();
+        this.saveShoppingCart([...cart]);
+        return this.numeroDeProdutosNoCarrinho();
       }
       result.quantity = 1;
-      return this.saveShoppingCart([...cart, result]);
+      console.log(result);
+      this.saveShoppingCart([...cart, result]);
+      return this.numeroDeProdutosNoCarrinho();
     }
     if (result) {
       result.quantity = 1;
-      return this.saveShoppingCart([result]);
+      this.saveShoppingCart([result]);
+      return this.numeroDeProdutosNoCarrinho();
     }
   };
 
+  numeroDeProdutosNoCarrinho = () => {
+    const produtos = this.loadShoppingCart();
+    if (produtos) {
+      let numero = produtos.map((produto) => produto.quantity);
+      numero = numero.reduce((soma, i) => soma + i);
+      console.log(numero);
+
+      this.setState({
+        numero,
+      });
+      return numero;
+    }
+    return 0;
+  };
+
   render() {
-    const { categories, productsSearch } = this.state;
+    const { categories, productsSearch, numero } = this.state;
     return (
       <div>
         <div>
@@ -111,6 +125,9 @@ class Listagem extends React.Component {
             <button type="button">
               Carrinho de Compras
               <img src="./wireframes/card_03/png" alt="" />
+              <div data-testid="shopping-cart-size">
+                { `${numero}` }
+              </div>
             </button>
           </Link>
         </div>
