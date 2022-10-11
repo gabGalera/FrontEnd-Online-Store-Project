@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductId } from '../services/api';
 
-class Detalhes extends React.Component {
+class Detalhes extends Component {
   constructor() {
     super();
 
     this.state = {
       productsSearch: [],
+      result: false,
+      avaliacao: [],
+      email: '',
+      comments: '',
+      rating: '',
     };
   }
 
   componentDidMount() {
     const { id: { match: { params } } } = this.props;
     this.getProduct(params.id);
+    this.getStorage(params.id);
   }
 
   getProduct = async (id) => {
@@ -38,8 +44,84 @@ class Detalhes extends React.Component {
     return this.saveShoppingCart([productsSearch]);
   };
 
+  handleEmail = ({ target }) => {
+    const { value } = target;
+    this.setState({
+      email: value,
+    });
+  };
+
+  handleComments = ({ target }) => {
+    const { value } = target;
+    this.setState({
+      comments: value,
+    });
+  };
+
+  handleRating = ({ target }) => {
+    const { id } = target;
+    this.setState({
+      rating: id,
+    });
+  };
+
+  getStorage = (id) => {
+    const getSavedFromLC = JSON.parse(localStorage.getItem(id.toString()));
+    if (getSavedFromLC) {
+      this.setState({
+        avaliacao: getSavedFromLC,
+      });
+    }
+  };
+
+  verifyButton = () => {
+    const { email, comments, rating } = this.state;
+    const emailRegex = /\S+@\S+\.\S+/;
+    const emailVerify = emailRegex.test(email);
+    const commentsVerify = comments.length === 0;
+    const ratingVerify = rating.length === 0;
+    console.log(emailVerify);
+    console.log(!commentsVerify);
+    console.log(!ratingVerify);
+
+    if (emailVerify && !ratingVerify) {
+      const avaliacaoObj = {
+        email,
+        text: comments,
+        rating,
+      };
+
+      this.setState(
+        (prev) => ({
+          avaliacao: [...prev.avaliacao, avaliacaoObj],
+        }),
+        () => {
+          this.setStorage();
+          this.setState({
+            result: false,
+            email: '',
+            rating: '',
+            comments: '',
+          });
+        },
+      );
+    } else {
+      this.setState({
+        result: true,
+      });
+    }
+  };
+
+  setStorage = () => {
+    const {
+      avaliacao,
+      productsSearch: { id },
+    } = this.state;
+    localStorage.setItem(id, JSON.stringify(avaliacao));
+  };
+
   render() {
-    const { productsSearch } = this.state;
+    const { productsSearch, result, avaliacao, email, rating, comments } = this.state;
 
     return (
       <>
@@ -67,7 +149,84 @@ class Detalhes extends React.Component {
             Carrinho de Compras
           </button>
         </Link>
-
+        <form>
+          <label htmlFor="avaliar">
+            Avaliar
+            <input
+              data-testid="1-rating"
+              type="radio"
+              id="1"
+              required
+              value={ rating }
+              name="rating"
+              onClick={ this.handleRating }
+            />
+            <input
+              data-testid="2-rating"
+              type="radio"
+              id="2"
+              required
+              value={ rating }
+              name="rating"
+              onClick={ this.handleRating }
+            />
+            <input
+              data-testid="3-rating"
+              type="radio"
+              id="3"
+              required
+              value={ rating }
+              name="rating"
+              onClick={ this.handleRating }
+            />
+            <input
+              data-testid="4-rating"
+              type="radio"
+              id="4"
+              required
+              value={ rating }
+              name="rating"
+              onClick={ this.handleRating }
+            />
+            <input
+              data-testid="5-rating"
+              name="rating"
+              id="5"
+              required
+              value={ rating }
+              type="radio"
+              onClick={ this.handleRating }
+            />
+            <input
+              data-testid="product-detail-email"
+              type="email"
+              value={ email }
+              required
+              onChange={ this.handleEmail }
+            />
+            <textarea
+              data-testid="product-detail-evaluation"
+              value={ comments }
+              onChange={ this.handleComments }
+            />
+            <button
+              type="button"
+              data-testid="submit-review-btn"
+              onClick={ this.verifyButton }
+            >
+              Enviar
+            </button>
+          </label>
+        </form>
+        {result && <p data-testid="error-msg">Campos inválidos</p>}
+        {avaliacao.length > 0
+            && avaliacao.map((item, i) => (
+              <div key={ i }>
+                <p data-testid="review-card-email">{item.email}</p>
+                <p data-testid="review-card-rating">{item.rating}</p>
+                <p data-testid="review-card-evaluation">{item.text}</p>
+              </div>
+            ))}
       </>
     );
   }
