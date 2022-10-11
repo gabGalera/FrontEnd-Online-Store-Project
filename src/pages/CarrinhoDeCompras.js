@@ -19,7 +19,10 @@ class CarrinhoDeCompras extends React.Component {
     const { shoppingCart } = this.state;
     shoppingCart.map((product) => {
       if (product.id === target.id) {
-        product.quantity += 1;
+        if (product.quantity < product.available_quantity) {
+          product.quantity += 1;
+          return product;
+        }
         return product;
       }
       return product;
@@ -33,6 +36,9 @@ class CarrinhoDeCompras extends React.Component {
     const { shoppingCart } = this.state;
     shoppingCart.map((product) => {
       if (product.id === target.id) {
+        if (product.quantity === 1) {
+          return product;
+        }
         product.quantity -= 1;
         return product;
       }
@@ -51,54 +57,59 @@ class CarrinhoDeCompras extends React.Component {
       <div>
         {
           shoppingCart
-            ? shoppingCart.map((produto, index) => (
-              <div key={ index }>
-                <p data-testid="shopping-cart-product-name">
-                  { produto.title }
-                </p>
-                <p>
-                  { produto.price }
-                </p>
-                <div>
-                  <button
-                    type="button"
-                    id={ produto.id }
-                    onClick={ this.addItem }
-                    data-testid="product-increase-quantity"
-                  >
-                    Somar
-
-                  </button>
-                  <p data-testid="shopping-cart-product-quantity">
-                    {
-                      produto.quantity > 1 ? produto.quantity : 1
-                    }
+            ? shoppingCart.map((produto, index) => {
+              if (produto.quantity === undefined) {
+                produto.quantity = 1;
+              }
+              return (
+                <div key={ index }>
+                  <p data-testid="shopping-cart-product-name">
+                    { produto.title }
                   </p>
-                  <button
-                    type="button"
-                    id={ produto.id }
-                    onClick={ this.removeItem }
-                    data-testid="product-decrease-quantity"
-                  >
-                    Diminuir
-                  </button>
-                  <button
-                    type="button"
-                    id={ produto.id }
-                    onClick={ (e) => {
-                      const aux = shoppingCart
-                        .filter((entry) => entry.id !== e.target.id);
-                      this.setState({
-                        shoppingCart: aux,
-                      });
-                    } }
-                    data-testid="remove-product"
-                  >
-                    Excluir
-                  </button>
+                  <p>
+                    { produto.price }
+                  </p>
+                  <div>
+                    <button
+                      type="button"
+                      id={ produto.id }
+                      onClick={ this.addItem }
+                      data-testid="product-increase-quantity"
+                    >
+                      Somar
+                    </button>
+                    <p data-testid="shopping-cart-product-quantity">
+                      {
+                        produto.quantity
+                      }
+                    </p>
+                    <button
+                      type="button"
+                      id={ produto.id }
+                      onClick={ this.removeItem }
+                      data-testid="product-decrease-quantity"
+                    >
+                      Diminuir
+                    </button>
+                    <button
+                      type="button"
+                      id={ produto.id }
+                      onClick={ (e) => {
+                        // const { shoppingCart } = this.state;
+                        const aux = shoppingCart
+                          .filter((entry) => entry.id !== e.target.id);
+                        this.setState({
+                          shoppingCart: aux,
+                        });
+                      } }
+                      data-testid="remove-product"
+                    >
+                      Excluir
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
             : <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
         }
       </div>
