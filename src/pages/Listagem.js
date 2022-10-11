@@ -68,10 +68,19 @@ class Listagem extends React.Component {
     const { productsSearch } = this.state;
     const result = productsSearch.find((produto) => produto.id === value);
     const cart = this.loadShoppingCart();
+    // result.quantity = 0;
     if (cart) {
+      if (cart.find((item) => item.id === value)) {
+        cart.quantity += 1;
+        return this.saveShoppingCart([...cart]);
+      }
+      result.quantity = 1;
       return this.saveShoppingCart([...cart, result]);
     }
-    return this.saveShoppingCart([result]);
+    if (result) {
+      result.quantity = 1;
+      return this.saveShoppingCart([result]);
+    }
   };
 
   render() {
