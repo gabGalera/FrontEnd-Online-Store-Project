@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { getProductsInCart, clearProductsInCart } from '../services/localStorageApi';
 
 class Checkout extends React.Component {
   state = {
@@ -48,7 +49,9 @@ class Checkout extends React.Component {
     } else {
       this.setState({ error: true });
     }
+
     clearProductsInCart();
+    localStorage.clear();
   };
 
   render() {
@@ -58,9 +61,9 @@ class Checkout extends React.Component {
       <div>
         <div>
           {shoppingCartProducts.map((product) => {
-            const { title, id } = product;
+            const { title, index } = product;
             return (
-              <div key={ id }>
+              <div key={ index }>
                 <p>{ title }</p>
               </div>
             );
@@ -70,6 +73,7 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="name">
               <input
+                required
                 data-testid="checkout-fullname"
                 placeholder="Nome completo"
                 type="text"
@@ -83,6 +87,7 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="email">
               <input
+                required
                 data-testid="checkout-email"
                 placeholder="E-mail"
                 type="text"
@@ -96,6 +101,7 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="cpf">
               <input
+                required
                 data-testid="checkout-cpf"
                 placeholder="CPF"
                 type="text"
@@ -109,6 +115,7 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="phoneNumber">
               <input
+                required
                 data-testid="checkout-phone"
                 placeholder="Número de telefone"
                 type="text"
@@ -122,6 +129,7 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="cep">
               <input
+                required
                 data-testid="checkout-cep"
                 placeholder="CEP"
                 type="text"
@@ -135,6 +143,7 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="address">
               <input
+                required
                 data-testid="checkout-address"
                 placeholder="Endereço"
                 type="text"
@@ -149,8 +158,8 @@ class Checkout extends React.Component {
             <label htmlFor="ticketPayment">
               Boleto
               <input
-                data-testid="ticket-payment"
                 required
+                data-testid="ticket-payment"
                 type="radio"
                 name="payment"
                 id="ticket"
