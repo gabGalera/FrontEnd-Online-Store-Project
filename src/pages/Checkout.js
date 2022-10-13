@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { getProductsInCart, clearProductsInCart } from '../services/localStorageApi';
 
 class Checkout extends React.Component {
   state = {
-    shoppingCartProducts: [],
+    productsName: '',
+    shoppingCartProducts: false,
     name: '',
     email: '',
     cpf: '',
@@ -16,10 +15,13 @@ class Checkout extends React.Component {
   };
 
   componentDidMount() {
-    const productList = getProductsInCart();
-    this.setState({
-      shoppingCartProducts: productList,
-    });
+    const getLCInfo = JSON.parse(localStorage.getItem('produtos'));
+    // console.log(getLCInfo.map((item) => item.title));
+    const getLCName = getLCInfo.map((item) => item.title);
+    console.log(getLCName);
+    this.setState(() => ({
+      productsName: getLCName,
+    }));
   }
 
   onInputChange = ({ target }) => {
@@ -28,54 +30,64 @@ class Checkout extends React.Component {
   };
 
   onClickFinishButton = () => {
-    const { name, email, cpf, phoneNumber, cep,
-      address, payment } = this.state;
-    const validate = [
-      name.length > 0,
-      email.length > 0,
-      cpf.length > 0,
-      phoneNumber.length > 0,
-      cep.length > 0,
-      address.length > 0,
-      payment.length > 0,
-    ].every(Boolean);
+    const { name, email, cpf, phoneNumber, cep, address, payment } = this.state;
+    const validate = name.length > 0
+      && email.length > 0
+      && cpf.length > 0
+      && phoneNumber.length > 0
+      && cep.length > 0
+      && address.length > 0
+      && payment.length > 0;
+    console.log(validate);
     if (validate) {
       this.setState({ shoppingCartProducts: [] }, () => {
+        // eslint-disable-next-line react/prop-types
         const { history } = this.props;
         const { shoppingCartProducts } = this.state;
-        localStorage.setItem('dataProducts', JSON.stringify(shoppingCartProducts));
+        localStorage.setItem(
+          'dataProducts',
+          JSON.stringify(shoppingCartProducts),
+        );
+        localStorage.clear();
+        // eslint-disable-next-line react/prop-types
         history.push('/');
       });
     } else {
       this.setState({ error: true });
     }
-
-    clearProductsInCart();
-    localStorage.clear();
   };
 
   render() {
-    const { shoppingCartProducts, name, email,
-      cpf, phoneNumber, cep, address, error } = this.state;
+    const {
+      productsName,
+      name,
+      email,
+      cpf,
+      phoneNumber,
+      cep,
+      address,
+      error,
+    } = this.state;
+    console.log(productsName);
     return (
       <div>
-        <div>
-          {shoppingCartProducts.map((product) => {
-            const { title, index } = product;
-            return (
-              <div key={ index }>
-                <p>{ title }</p>
-              </div>
-            );
-          })}
-        </div>
+        {productsName.length > 0
+          // eslint-disable-next-line no-shadow
+          && productsName.map((name) => (
+            // eslint-disable-next-line react/jsx-key
+            <div>
+              <p>
+                {name}
+              </p>
+            </div>
+          ))}
         <form>
           <div>
             <label htmlFor="name">
               <input
-                required
                 data-testid="checkout-fullname"
                 placeholder="Nome completo"
+                required
                 type="text"
                 name="name"
                 id="name"
@@ -87,9 +99,9 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="email">
               <input
-                required
                 data-testid="checkout-email"
                 placeholder="E-mail"
+                required
                 type="text"
                 name="email"
                 id="email"
@@ -101,10 +113,10 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="cpf">
               <input
-                required
                 data-testid="checkout-cpf"
                 placeholder="CPF"
                 type="text"
+                required
                 name="cpf"
                 id="cpf"
                 value={ cpf }
@@ -115,10 +127,10 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="phoneNumber">
               <input
-                required
                 data-testid="checkout-phone"
                 placeholder="Número de telefone"
                 type="text"
+                required
                 name="phoneNumber"
                 id="phoneNumber"
                 value={ phoneNumber }
@@ -129,10 +141,10 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="cep">
               <input
-                required
                 data-testid="checkout-cep"
                 placeholder="CEP"
                 type="text"
+                required
                 name="cep"
                 id="cep"
                 value={ cep }
@@ -143,11 +155,11 @@ class Checkout extends React.Component {
           <div>
             <label htmlFor="address">
               <input
-                required
                 data-testid="checkout-address"
                 placeholder="Endereço"
                 type="text"
                 name="address"
+                required
                 id="address"
                 value={ address }
                 onChange={ this.onInputChange }
@@ -158,8 +170,8 @@ class Checkout extends React.Component {
             <label htmlFor="ticketPayment">
               Boleto
               <input
-                required
                 data-testid="ticket-payment"
+                required
                 type="radio"
                 name="payment"
                 id="ticket"
@@ -225,11 +237,4 @@ class Checkout extends React.Component {
     );
   }
 }
-
-Checkout.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
 export default Checkout;
