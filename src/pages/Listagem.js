@@ -65,13 +65,13 @@ class Listagem extends React.Component {
       if (cart.find((item) => item.id === value)) {
         const item = cart.find((produto) => produto.id === value);
         item.quantity += 1;
-        console.log(item.quantity);
+        // console.log(item.quantity);
         this.numeroDeProdutosNoCarrinho();
         this.saveShoppingCart([...cart]);
         return this.numeroDeProdutosNoCarrinho();
       }
       result.quantity = 1;
-      console.log(result);
+      // console.log(result);
       this.saveShoppingCart([...cart, result]);
       return this.numeroDeProdutosNoCarrinho();
     }
@@ -87,7 +87,7 @@ class Listagem extends React.Component {
     if (produtos) {
       let numero = produtos.map((produto) => produto.quantity);
       numero = numero.reduce((soma, i) => soma + i);
-      console.log(numero);
+      // console.log(numero);
 
       this.setState({
         numero,

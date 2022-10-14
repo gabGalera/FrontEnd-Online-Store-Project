@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Listagem from './pages/Listagem';
 import Detalhes from './pages/Detalhes';
 import CarrinhoDeCompras from './pages/CarrinhoDeCompras';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           path="/Detalhes/:id"
           render={ (id) => <Detalhes id={ id } /> }
         />
+        <Route exact path="/checkout" component={ Checkout } />
       </Switch>
     </BrowserRouter>
   );
