@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Checkout extends React.Component {
   state = {
@@ -16,7 +17,6 @@ class Checkout extends React.Component {
 
   componentDidMount() {
     const getLCInfo = JSON.parse(localStorage.getItem('produtos'));
-    // console.log(getLCInfo.map((item) => item.title));
     const getLCName = getLCInfo.map((item) => item.title);
     console.log(getLCName);
     this.setState(() => ({
@@ -41,7 +41,6 @@ class Checkout extends React.Component {
     console.log(validate);
     if (validate) {
       this.setState({ shoppingCartProducts: [] }, () => {
-        // eslint-disable-next-line react/prop-types
         const { history } = this.props;
         const { shoppingCartProducts } = this.state;
         localStorage.setItem(
@@ -49,7 +48,6 @@ class Checkout extends React.Component {
           JSON.stringify(shoppingCartProducts),
         );
         localStorage.clear();
-        // eslint-disable-next-line react/prop-types
         history.push('/');
       });
     } else {
@@ -72,12 +70,10 @@ class Checkout extends React.Component {
     return (
       <div>
         {productsName.length > 0
-          // eslint-disable-next-line no-shadow
-          && productsName.map((name) => (
-            // eslint-disable-next-line react/jsx-key
-            <div>
+          && productsName.map((nameProduct, index) => (
+            <div key={ index }>
               <p>
-                {name}
+                {nameProduct}
               </p>
             </div>
           ))}
@@ -237,4 +233,8 @@ class Checkout extends React.Component {
     );
   }
 }
+
+Checkout.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
 export default Checkout;
