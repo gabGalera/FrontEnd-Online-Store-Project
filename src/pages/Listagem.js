@@ -98,8 +98,16 @@ class Listagem extends React.Component {
     return 0;
   };
 
+  textFunc = (search) => (search.length === 0
+    ? (
+      <p>
+        Você ainda não realizou uma busca
+      </p>
+    )
+    : <p>Nenhum produto foi encontrado</p>);
+
   render() {
-    const { categories, productsSearch, numero } = this.state;
+    const { categories, productsSearch, numero, search } = this.state;
     return (
       <div>
         <header className={ styles.header__container }>
@@ -144,13 +152,11 @@ class Listagem extends React.Component {
             </span>
           </Link>
         </header>
-        <span data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </span>
-        <div>
-          <p>Categorias:</p>
+        <div className={ styles.categories__container }>
+          <p className={ styles.categories__title }>Categorias:</p>
           {categories.map((categoria) => (
             <button
+              className={ styles.categories }
               type="button"
               key={ categoria.id }
               id={ categoria.id }
@@ -189,7 +195,13 @@ class Listagem extends React.Component {
                   Adicionar ao Carrinho
                 </button>
               </div>
-            )) : <p>Nenhum produto foi encontrado</p>
+            )) : (
+              <div className={ styles.initial__message }>
+                {this.textFunc(search)}
+                <span data-testid="home-initial-message">
+                  Digite algum termo de pesquisa ou escolha uma categoria.
+                </span>
+              </div>)
         }
       </div>
     );
