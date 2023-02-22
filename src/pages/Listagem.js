@@ -98,13 +98,15 @@ class Listagem extends React.Component {
     return 0;
   };
 
-  textFunc = (search) => (search.length === 0
-    ? (
-      <p>
-        Você ainda não realizou uma busca
-      </p>
-    )
-    : <p>Nenhum produto foi encontrado</p>);
+  textFunc = (search, productsSearch) => (
+    search.length === 0 && productsSearch.length === 0
+      ? (
+        <p>
+          Nenhum produto foi encontrado
+          {/* Você ainda não realizou uma busca */}
+        </p>
+      )
+      : <p>Nenhum produto foi encontrado</p>);
 
   render() {
     const { categories, productsSearch, numero, search } = this.state;
@@ -167,42 +169,65 @@ class Listagem extends React.Component {
             </button>
           ))}
         </div>
-        {
-          productsSearch.length > 0
-            ? productsSearch.map((item) => (
-              <div
-                data-testid="product"
-                key={ item.id }
-              >
-                <Link
-                  to={ `/Detalhes/${item.id}` }
-                  id={ item.id }
-                  data-testid="product-detail-link"
+        <div
+          className={ styles.products__container }
+        >
+          {
+            productsSearch.length > 0
+              ? productsSearch.map((item) => (
+                <div
+                  className={ styles.product__div }
+                  data-testid="product"
+                  key={ item.id }
                 >
-                  {item.shipping.free_shipping && (
-                    <p data-testid="free-shipping">Frete Grátis</p>
-                  )}
-                  <p>{item.title}</p>
-                  <img src={ item.thumbnail } alt={ item.name } />
-                  <p>{item.price}</p>
-                </Link>
-                <button
-                  data-testid="product-add-to-cart"
-                  type="button"
-                  onClick={ this.cartAdd }
-                  value={ item.id }
-                >
-                  Adicionar ao Carrinho
-                </button>
-              </div>
-            )) : (
-              <div className={ styles.initial__message }>
-                {this.textFunc(search)}
-                <span data-testid="home-initial-message">
-                  Digite algum termo de pesquisa ou escolha uma categoria.
-                </span>
-              </div>)
-        }
+                  <Link
+                    className={ styles.product__link }
+                    to={ `/Detalhes/${item.id}` }
+                    id={ item.id }
+                    data-testid="product-detail-link"
+                  >
+                    <div>
+                      <img src={ item.thumbnail } alt={ item.name } />
+                      {item.shipping.free_shipping && (
+                        <p
+                          className={ styles.frete }
+                          data-testid="free-shipping"
+                        >
+                          Frete Grátis
+                        </p>
+                      )}
+                    </div>
+                    <p className={ styles.product__title }>{item.title}</p>
+                    <p className={ styles.product__price }>
+                      <span>
+                        R$
+                        {' '}
+                      </span>
+                      {
+                        item
+                          .price
+                          .toLocaleString('pt-br', { minimumFractionDigits: 2 })
+                      }
+                    </p>
+                  </Link>
+                  <button
+                    data-testid="product-add-to-cart"
+                    type="button"
+                    onClick={ this.cartAdd }
+                    value={ item.id }
+                  >
+                    Adicionar ao Carrinho
+                  </button>
+                </div>
+              )) : (
+                <div className={ styles.initial__message }>
+                  {this.textFunc(search, productsSearch)}
+                  <span data-testid="home-initial-message">
+                    Digite algum termo de pesquisa ou escolha uma categoria.
+                  </span>
+                </div>)
+          }
+        </div>
       </div>
     );
   }

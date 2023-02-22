@@ -18,7 +18,6 @@ class Checkout extends React.Component {
   componentDidMount() {
     const getLCInfo = JSON.parse(localStorage.getItem('produtos'));
     const getLCName = getLCInfo.map((item) => item.title);
-    console.log(getLCName);
     this.setState(() => ({
       productsName: getLCName,
     }));
@@ -38,7 +37,6 @@ class Checkout extends React.Component {
       && cep.length > 0
       && address.length > 0
       && payment.length > 0;
-    console.log(validate);
     if (validate) {
       this.setState({ shoppingCartProducts: [] }, () => {
         const { history } = this.props;
@@ -66,7 +64,7 @@ class Checkout extends React.Component {
       address,
       error,
     } = this.state;
-    console.log(productsName);
+
     return (
       <div>
         {productsName.length > 0
