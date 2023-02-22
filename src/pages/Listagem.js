@@ -211,6 +211,7 @@ class Listagem extends React.Component {
                     </p>
                   </Link>
                   <button
+                    className={ styles.product__btn }
                     data-testid="product-add-to-cart"
                     type="button"
                     onClick={ this.cartAdd }
