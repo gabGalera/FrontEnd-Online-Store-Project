@@ -4,6 +4,7 @@ import {
   getCategories,
   getProductsFromCategoryAndQuery,
 } from '../services/api';
+import styles from './styles/Listagem.module.css';
 
 class Listagem extends React.Component {
   constructor() {
@@ -65,13 +66,11 @@ class Listagem extends React.Component {
       if (cart.find((item) => item.id === value)) {
         const item = cart.find((produto) => produto.id === value);
         item.quantity += 1;
-        // console.log(item.quantity);
         this.numeroDeProdutosNoCarrinho();
         this.saveShoppingCart([...cart]);
         return this.numeroDeProdutosNoCarrinho();
       }
       result.quantity = 1;
-      // console.log(result);
       this.saveShoppingCart([...cart, result]);
       return this.numeroDeProdutosNoCarrinho();
     }
@@ -87,7 +86,6 @@ class Listagem extends React.Component {
     if (produtos) {
       let numero = produtos.map((produto) => produto.quantity);
       numero = numero.reduce((soma, i) => soma + i);
-      // console.log(numero);
 
       this.setState({
         numero,
@@ -101,7 +99,7 @@ class Listagem extends React.Component {
     const { categories, productsSearch, numero } = this.state;
     return (
       <div>
-        <div>
+        <header className={ styles.header__container }>
           <label htmlFor="search">
             <input
               type="text"
@@ -118,9 +116,6 @@ class Listagem extends React.Component {
           >
             Pesquisar
           </button>
-          <p data-testid="home-initial-message">
-            Digite algum termo de pesquisa ou escolha uma categoria.
-          </p>
           <Link to="/CarrinhoDeCompras" data-testid="shopping-cart-button">
             <button type="button">
               Carrinho de Compras
@@ -130,7 +125,10 @@ class Listagem extends React.Component {
               </div>
             </button>
           </Link>
-        </div>
+        </header>
+        <span data-testid="home-initial-message">
+          Digite algum termo de pesquisa ou escolha uma categoria.
+        </span>
         <div>
           <p>Categorias:</p>
           {categories.map((categoria) => (
