@@ -108,6 +108,10 @@
   text-decoration: none;
 }
 
+.categories:hover {
+  cursor: pointer;
+}
+
 .products__container {
   box-sizing: border-box;
   display: flex;
