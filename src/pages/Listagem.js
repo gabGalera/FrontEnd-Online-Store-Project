@@ -5,6 +5,9 @@ import {
   getProductsFromCategoryAndQuery,
 } from '../services/api';
 import styles from './styles/Listagem.module.css';
+import logo from '../images/logo.png';
+import searchIcon from '../images/searchIcon.png';
+import cartImg from '../images/cart.png';
 
 class Listagem extends React.Component {
   constructor() {
@@ -100,30 +103,45 @@ class Listagem extends React.Component {
     return (
       <div>
         <header className={ styles.header__container }>
-          <label htmlFor="search">
+          <div className={ styles.search__container }>
+            <label htmlFor="search">
+              <input
+                placeholder="Digite o que você busca"
+                className={ styles.search__input }
+                type="text"
+                id="search"
+                onChange={ this.handleSearch }
+                data-testid="query-input"
+                name="search"
+              />
+            </label>
             <input
-              type="text"
-              id="search"
-              onChange={ this.handleSearch }
-              data-testid="query-input"
-              name="search"
+              className={ styles.search__icon }
+              type="image"
+              alt="search icon"
+              data-testid="query-button"
+              onClick={ this.handleClick }
+              src={ searchIcon }
             />
-          </label>
-          <button
-            type="button"
-            data-testid="query-button"
-            onClick={ this.handleClick }
+          </div>
+          <img src={ logo } alt="logo" />
+          <Link
+            className={ styles.cart__container }
+            to="/CarrinhoDeCompras"
+            data-testid="shopping-cart-button"
           >
-            Pesquisar
-          </button>
-          <Link to="/CarrinhoDeCompras" data-testid="shopping-cart-button">
-            <button type="button">
-              Carrinho de Compras
-              <img src="./wireframes/card_03/png" alt="" />
-              <div data-testid="shopping-cart-size">
-                { `${numero}` }
-              </div>
-            </button>
+            <input
+              className={ styles.cart__image }
+              type="image"
+              src={ cartImg }
+              alt="shopping cart"
+            />
+            <span
+              className={ styles.counter }
+              data-testid="shopping-cart-size"
+            >
+              { `${numero}` }
+            </span>
           </Link>
         </header>
         <span data-testid="home-initial-message">
