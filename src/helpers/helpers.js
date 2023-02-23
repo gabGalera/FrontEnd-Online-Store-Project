@@ -64,26 +64,30 @@ const verifyButton = (e) => {
 const cartAdd = (target, e) => {
   const { value } = target;
   const { productsSearch } = e.state;
-  let result;
+  let product;
+  console.log(productsSearch);
   if (productsSearch.length) {
-    result = productsSearch.find((produto) => produto.id === value);
+    product = productsSearch.find((produto) => produto.id === value);
   } else {
-    result = productsSearch;
+    product = productsSearch;
   }
   let cart = loadShoppingCart();
   if (cart) {
     if (cart.find((item) => item.id === value)) {
-      result.quantity += 1;
+      product.quantity = cart
+        .find((item) => item.id === value)
+        .quantity + 1;
+
       cart = cart.filter((item) => item.id !== value);
-      saveShoppingCart([...cart, result]);
+      saveShoppingCart([...cart, product]);
       return numeroDeProdutosNoCarrinho(e);
     }
-    result.quantity = 1;
-    saveShoppingCart([...cart, result]);
+    product.quantity = 1;
+    saveShoppingCart([...cart, product]);
     return numeroDeProdutosNoCarrinho(e);
   }
-  result.quantity = 1;
-  saveShoppingCart([result]);
+  product.quantity = 1;
+  saveShoppingCart([product]);
   return numeroDeProdutosNoCarrinho(e);
 };
 
