@@ -1,0 +1,11 @@
+.container__img {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
