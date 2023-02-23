@@ -6,6 +6,8 @@ import {
 } from '../services/api';
 import styles from './styles/Listagem.module.css';
 import Header from '../components/Header';
+import {
+  cartAdd, numeroDeProdutosNoCarrinho } from '../helpers/helpers';
 
 class Listagem extends React.Component {
   constructor() {
@@ -20,7 +22,7 @@ class Listagem extends React.Component {
 
   componentDidMount() {
     this.loadCategories();
-    this.numeroDeProdutosNoCarrinho();
+    numeroDeProdutosNoCarrinho(this);
   }
 
   loadCategories = async () => {
@@ -51,49 +53,6 @@ class Listagem extends React.Component {
     this.setState({
       search: value,
     });
-  };
-
-  loadShoppingCart = () => JSON.parse(localStorage.getItem('produtos'));
-
-  saveShoppingCart = (product) => localStorage
-    .setItem('produtos', JSON.stringify(product));
-
-  cartAdd = ({ target }) => {
-    const { value } = target;
-    const { productsSearch } = this.state;
-    const result = productsSearch.find((produto) => produto.id === value);
-    const cart = this.loadShoppingCart();
-    if (cart) {
-      if (cart.find((item) => item.id === value)) {
-        const item = cart.find((produto) => produto.id === value);
-        item.quantity += 1;
-        this.numeroDeProdutosNoCarrinho();
-        this.saveShoppingCart([...cart]);
-        return this.numeroDeProdutosNoCarrinho();
-      }
-      result.quantity = 1;
-      this.saveShoppingCart([...cart, result]);
-      return this.numeroDeProdutosNoCarrinho();
-    }
-    if (result) {
-      result.quantity = 1;
-      this.saveShoppingCart([result]);
-      return this.numeroDeProdutosNoCarrinho();
-    }
-  };
-
-  numeroDeProdutosNoCarrinho = () => {
-    const produtos = this.loadShoppingCart();
-    if (produtos) {
-      let numero = produtos.map((produto) => produto.quantity);
-      numero = numero.reduce((soma, i) => soma + i);
-
-      this.setState({
-        numero,
-      });
-      return numero;
-    }
-    return 0;
   };
 
   textFunc = (search, productsSearch) => (
@@ -177,7 +136,7 @@ class Listagem extends React.Component {
                     className={ styles.product__btn }
                     data-testid="product-add-to-cart"
                     type="button"
-                    onClick={ this.cartAdd }
+                    onClick={ ({ target }) => cartAdd(target, this) }
                     value={ item.id }
                   >
                     Adicionar ao Carrinho

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductId } from '../services/api';
-import { setStorage, loadShoppingCart, saveShoppingCart } from '../helpers/Detalhes';
+import {
+  verifyButton,
+  cartAdd,
+  numeroDeProdutosNoCarrinho } from '../helpers/helpers';
 // import Header from '../components/Header';
 
 class Detalhes extends Component {
@@ -24,7 +27,7 @@ class Detalhes extends Component {
     const { id: { match: { params } } } = this.props;
     this.getProduct(params.id);
     this.getStorage(params.id);
-    this.numeroDeProdutosNoCarrinho();
+    numeroDeProdutosNoCarrinho(this);
   }
 
   getProduct = async (id) => {
@@ -32,29 +35,6 @@ class Detalhes extends Component {
     this.setState({
       productsSearch: response,
     });
-  };
-
-  cartAdd = ({ target }) => {
-    const { value } = target;
-    const { productsSearch } = this.state;
-    const cart = loadShoppingCart();
-    if (cart) {
-      if (cart.find((item) => item.id === value)) {
-        const item = cart.find((produto) => produto.id === value);
-        item.quantity += 1;
-        this.numeroDeProdutosNoCarrinho();
-        saveShoppingCart([...cart]);
-        return this.numeroDeProdutosNoCarrinho();
-      }
-      productsSearch.quantity = 1;
-      saveShoppingCart([...cart, productsSearch]);
-      return this.numeroDeProdutosNoCarrinho();
-    }
-    if (productsSearch) {
-      productsSearch.quantity = 1;
-      saveShoppingCart([productsSearch]);
-      return this.numeroDeProdutosNoCarrinho();
-    }
   };
 
   handle = ({ target }) => {
@@ -78,50 +58,6 @@ class Detalhes extends Component {
         avaliacao: getSavedFromLC,
       });
     }
-  };
-
-  verifyButton = () => {
-    const { email, comments, rating } = this.state;
-    const emailRegex = /\S+@\S+\.\S+/;
-    const emailVerify = emailRegex.test(email);
-    const ratingVerify = rating.length === 0;
-    if (emailVerify && !ratingVerify) {
-      const avaliacaoObj = {
-        email,
-        text: comments,
-        rating,
-      };
-
-      this.setState((prev) => ({
-        avaliacao: [...prev.avaliacao, avaliacaoObj],
-      }), () => {
-        const { avaliacao, productsSearch: { id } } = this.state;
-        setStorage({ avaliacao, id });
-        this.setState({
-          result: false,
-          email: '',
-          rating: '',
-          comments: '',
-        });
-      });
-    } else {
-      this.setState({
-        result: true,
-      });
-    }
-  };
-
-  numeroDeProdutosNoCarrinho = () => {
-    const produtos = loadShoppingCart();
-    if (produtos) {
-      const numero = produtos.map((produto) => produto.quantity)
-        .reduce((soma, i) => soma + i);
-      this.setState({
-        numero,
-      });
-      return numero;
-    }
-    return 0;
   };
 
   render() {
@@ -151,7 +87,7 @@ class Detalhes extends Component {
         <button
           data-testid="product-detail-add-to-cart"
           type="button"
-          onClick={ this.cartAdd }
+          onClick={ ({ target }) => cartAdd(target, this) }
         >
           Add To Cart
         </button>
@@ -234,7 +170,7 @@ class Detalhes extends Component {
             <button
               type="button"
               data-testid="submit-review-btn"
-              onClick={ this.verifyButton }
+              onClick={ () => verifyButton(this) }
             >
               Enviar
             </button>
