@@ -18,7 +18,7 @@ const getStorage = (id) => {
 
 const numeroDeProdutosNoCarrinho = (e) => {
   const produtos = loadShoppingCart();
-  if (produtos) {
+  if (produtos && produtos.length > 0) {
     let numero = produtos.map((produto) => produto.quantity);
     numero = numero.reduce((soma, i) => soma + i);
 
