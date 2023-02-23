@@ -115,7 +115,6 @@ class Listagem extends React.Component {
             numero,
             handleSearch: this.handleSearch,
             handleClick: this.handleClick,
-            styles,
           },
         )}
         <div className={ styles.categories__container }>

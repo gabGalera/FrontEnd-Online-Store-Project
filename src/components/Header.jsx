@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import logo from '../images/logo.png';
 import searchIcon from '../images/searchIcon.png';
 import cartImg from '../images/cart.png';
+import styles from './Header.module.css';
 
-export default function JSX({ numero, handleSearch, handleClick, styles }) {
+export default function JSX({ numero, handleSearch, handleClick }) {
   return (
     <header className={ styles.header__container }>
       <div className={ styles.search__container }>
@@ -55,5 +56,4 @@ JSX.propTypes = {
   numero: PropTypes.number.isRequired,
   handleSearch: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
-  styles: PropTypes.shape().isRequired,
 };
