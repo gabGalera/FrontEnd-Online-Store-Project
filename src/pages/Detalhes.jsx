@@ -6,7 +6,7 @@ import {
   verifyButton,
   cartAdd,
   numeroDeProdutosNoCarrinho } from '../helpers/helpers';
-// import Header from '../components/Header';
+import Header from '../components/Header';
 
 class Detalhes extends Component {
   constructor() {
@@ -66,13 +66,13 @@ class Detalhes extends Component {
 
     return (
       <div>
-        {/* {Header(
+        {Header(
           {
             numero,
             handleSearch: this.handleSearch,
             handleClick: this.handleClick,
           },
-        )} */}
+        )}
         <div>
           <h1 data-testid="product-detail-name">
             {productsSearch.title}
