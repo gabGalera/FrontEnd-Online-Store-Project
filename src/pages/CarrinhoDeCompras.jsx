@@ -18,7 +18,7 @@ class CarrinhoDeCompras extends React.Component {
 
   addItem = ({ target }) => {
     const { shoppingCart } = this.state;
-    shoppingCart.map((product) => {
+    shoppingCart.forEach((product) => {
       if (product.id === target.id) {
         if (product.quantity < product.available_quantity) {
           product.quantity += 1;
@@ -45,6 +45,7 @@ class CarrinhoDeCompras extends React.Component {
       }
       return product;
     });
+
     this.setState({
       shoppingCart,
     });

@@ -70,23 +70,21 @@ const cartAdd = (target, e) => {
   } else {
     result = productsSearch;
   }
-  const cart = loadShoppingCart();
+  let cart = loadShoppingCart();
   if (cart) {
     if (cart.find((item) => item.id === value)) {
-      const item = cart.find((produto) => produto.id === value);
-      item.quantity += 1;
-      saveShoppingCart([...cart]);
+      result.quantity += 1;
+      cart = cart.filter((item) => item.id !== value);
+      saveShoppingCart([...cart, result]);
       return numeroDeProdutosNoCarrinho(e);
     }
     result.quantity = 1;
     saveShoppingCart([...cart, result]);
     return numeroDeProdutosNoCarrinho(e);
   }
-  if (result) {
-    result.quantity = 1;
-    saveShoppingCart([result]);
-    return numeroDeProdutosNoCarrinho(e);
-  }
+  result.quantity = 1;
+  saveShoppingCart([result]);
+  return numeroDeProdutosNoCarrinho(e);
 };
 
 export {

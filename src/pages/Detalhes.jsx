@@ -13,7 +13,7 @@ class Detalhes extends Component {
     super();
 
     this.state = {
-      productsSearch: [],
+      productsSearch: {},
       result: false,
       avaliacao: [],
       email: '',
@@ -84,14 +84,25 @@ class Detalhes extends Component {
               data-testid="product-detail-image"
             />
           </div>
-          <span data-testid="product-detail-price">{productsSearch.price}</span>
-          <button
-            data-testid="product-detail-add-to-cart"
-            type="button"
-            onClick={ ({ target }) => cartAdd(target, this) }
-          >
-            Add To Cart
-          </button>
+          <div className={ styles.container__infos }>
+            {avaliacao.length > 0
+            && avaliacao.map((item, i) => (
+              <div key={ i }>
+                <p data-testid="review-card-email">{item.email}</p>
+                <p data-testid="review-card-rating">{item.rating}</p>
+                <p data-testid="review-card-evaluation">{item.text}</p>
+              </div>
+            ))}
+            <span data-testid="product-detail-price">{productsSearch.price}</span>
+            <button
+              data-testid="product-detail-add-to-cart"
+              type="button"
+              value={ productsSearch.id }
+              onClick={ ({ target }) => cartAdd(target, this) }
+            >
+              Add To Cart
+            </button>
+          </div>
           <form>
             <label htmlFor="avaliar">
               Avaliar
@@ -162,16 +173,8 @@ class Detalhes extends Component {
                 Enviar
               </button>
             </label>
+            {result && <p data-testid="error-msg">Campos inválidos</p>}
           </form>
-          {result && <p data-testid="error-msg">Campos inválidos</p>}
-          {avaliacao.length > 0
-            && avaliacao.map((item, i) => (
-              <div key={ i }>
-                <p data-testid="review-card-email">{item.email}</p>
-                <p data-testid="review-card-rating">{item.rating}</p>
-                <p data-testid="review-card-evaluation">{item.text}</p>
-              </div>
-            ))}
         </div>
       </>
     );
