@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getProductId } from '../services/api';
 import {
   verifyButton,
@@ -7,6 +8,8 @@ import {
   numeroDeProdutosNoCarrinho } from '../helpers/helpers';
 import styles from './styles/Detalhes.module.css';
 import Header from '../components/Header';
+import goBack from '../images/goBack.png';
+import Avaliacao from '../components/Avaliacao';
 
 class Detalhes extends Component {
   constructor() {
@@ -75,6 +78,10 @@ class Detalhes extends Component {
         )}
         <div className={ styles.container }>
           <div className={ styles.container__img }>
+            <Link to="/" className={ styles.go__back }>
+              <img src={ goBack } alt="return" />
+              Voltar
+            </Link>
             <h1 data-testid="product-detail-name">
               {productsSearch.title}
             </h1>
@@ -85,14 +92,7 @@ class Detalhes extends Component {
             />
           </div>
           <div className={ styles.container__infos }>
-            {avaliacao.length > 0
-            && avaliacao.map((item, i) => (
-              <div key={ i }>
-                <p data-testid="review-card-email">{item.email}</p>
-                <p data-testid="review-card-rating">{item.rating}</p>
-                <p data-testid="review-card-evaluation">{item.text}</p>
-              </div>
-            ))}
+            {Avaliacao({ avaliacao })}
             <span data-testid="product-detail-price">{productsSearch.price}</span>
             <button
               data-testid="product-detail-add-to-cart"

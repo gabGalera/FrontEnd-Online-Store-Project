@@ -1,0 +1,21 @@
+.avaliacao {
+  background: white;
+  height: 70%;
+  overflow-y: scroll;
+  padding: 5vh 5vw;
+}
+
+.avaliacao > h1 {
+  color: black;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  padding-bottom: 5vh;
+}
+
+.avaliacao > div {
+  display: flex;
+  justify-content: space-between;
+}

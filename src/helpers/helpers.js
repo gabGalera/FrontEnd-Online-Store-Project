@@ -61,16 +61,19 @@ const verifyButton = (e) => {
   }
 };
 
+const convertArrayToObject = (productsSearch, value) => {
+  if (productsSearch.length) {
+    const product = productsSearch.find((produto) => produto.id === value);
+    return product;
+  }
+  const product = productsSearch;
+  return product;
+};
+
 const cartAdd = (target, e) => {
   const { value } = target;
   const { productsSearch } = e.state;
-  let product;
-  console.log(productsSearch);
-  if (productsSearch.length) {
-    product = productsSearch.find((produto) => produto.id === value);
-  } else {
-    product = productsSearch;
-  }
+  const product = convertArrayToObject(productsSearch, value);
   let cart = loadShoppingCart();
   if (cart) {
     if (cart.find((item) => item.id === value)) {

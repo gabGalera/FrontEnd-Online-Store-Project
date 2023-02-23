@@ -162,3 +162,7 @@
   text-align: center;
   width: 80%;
 }
+
+.product__btn:hover {
+  cursor: pointer;
+}
