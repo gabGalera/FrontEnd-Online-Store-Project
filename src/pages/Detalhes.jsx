@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductId } from '../services/api';
 import { setStorage, loadShoppingCart, saveShoppingCart } from '../helpers/Detalhes';
+// import Header from '../components/Header';
 
 class Detalhes extends Component {
   constructor() {
@@ -33,14 +34,27 @@ class Detalhes extends Component {
     });
   };
 
-  handleClick = () => {
+  cartAdd = ({ target }) => {
+    const { value } = target;
     const { productsSearch } = this.state;
     const cart = loadShoppingCart();
-    this.numeroDeProdutosNoCarrinho();
     if (cart) {
-      return saveShoppingCart([...cart, productsSearch]);
+      if (cart.find((item) => item.id === value)) {
+        const item = cart.find((produto) => produto.id === value);
+        item.quantity += 1;
+        this.numeroDeProdutosNoCarrinho();
+        saveShoppingCart([...cart]);
+        return this.numeroDeProdutosNoCarrinho();
+      }
+      productsSearch.quantity = 1;
+      saveShoppingCart([...cart, productsSearch]);
+      return this.numeroDeProdutosNoCarrinho();
     }
-    return saveShoppingCart([productsSearch]);
+    if (productsSearch) {
+      productsSearch.quantity = 1;
+      saveShoppingCart([productsSearch]);
+      return this.numeroDeProdutosNoCarrinho();
+    }
   };
 
   handle = ({ target }) => {
@@ -116,6 +130,13 @@ class Detalhes extends Component {
 
     return (
       <div>
+        {/* {Header(
+          {
+            numero,
+            handleSearch: this.handleSearch,
+            handleClick: this.handleClick,
+          },
+        )} */}
         <div>
           <h1 data-testid="product-detail-name">
             {productsSearch.title}
@@ -130,7 +151,7 @@ class Detalhes extends Component {
         <button
           data-testid="product-detail-add-to-cart"
           type="button"
-          onClick={ this.handleClick }
+          onClick={ this.cartAdd }
         >
           Add To Cart
         </button>
@@ -232,6 +253,7 @@ class Detalhes extends Component {
     );
   }
 }
+
 Detalhes.propTypes = {
   id: PropTypes.shape({
     match: PropTypes.shape({
@@ -241,4 +263,5 @@ Detalhes.propTypes = {
     }),
   }).isRequired,
 };
+
 export default Detalhes;
