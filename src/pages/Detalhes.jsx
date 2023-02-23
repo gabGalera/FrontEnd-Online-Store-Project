@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductId } from '../services/api';
+import { setStorage, loadShoppingCart, saveShoppingCart } from '../helpers/Detalhes';
 
 class Detalhes extends Component {
   constructor() {
@@ -32,19 +33,14 @@ class Detalhes extends Component {
     });
   };
 
-  loadShoppingCart = () => JSON.parse(localStorage.getItem('produtos'));
-
-  saveShoppingCart = (product) => localStorage
-    .setItem('produtos', JSON.stringify(product));
-
   handleClick = () => {
     const { productsSearch } = this.state;
-    const cart = this.loadShoppingCart();
+    const cart = loadShoppingCart();
     this.numeroDeProdutosNoCarrinho();
     if (cart) {
-      return this.saveShoppingCart([...cart, productsSearch]);
+      return saveShoppingCart([...cart, productsSearch]);
     }
-    return this.saveShoppingCart([productsSearch]);
+    return saveShoppingCart([productsSearch]);
   };
 
   handle = ({ target }) => {
@@ -85,7 +81,8 @@ class Detalhes extends Component {
       this.setState((prev) => ({
         avaliacao: [...prev.avaliacao, avaliacaoObj],
       }), () => {
-        this.setStorage();
+        const { avaliacao, productsSearch: { id } } = this.state;
+        setStorage({ avaliacao, id });
         this.setState({
           result: false,
           email: '',
@@ -100,13 +97,8 @@ class Detalhes extends Component {
     }
   };
 
-  setStorage = () => {
-    const { avaliacao, productsSearch: { id } } = this.state;
-    localStorage.setItem(id, JSON.stringify(avaliacao));
-  };
-
   numeroDeProdutosNoCarrinho = () => {
-    const produtos = this.loadShoppingCart();
+    const produtos = loadShoppingCart();
     if (produtos) {
       const numero = produtos.map((produto) => produto.quantity)
         .reduce((soma, i) => soma + i);
@@ -123,15 +115,17 @@ class Detalhes extends Component {
       numero } = this.state;
 
     return (
-      <>
-        <h1 data-testid="product-detail-name">
-          {productsSearch.title}
-        </h1>
-        <img
-          src={ productsSearch.thumbnail }
-          alt={ productsSearch.title }
-          data-testid="product-detail-image"
-        />
+      <div>
+        <div>
+          <h1 data-testid="product-detail-name">
+            {productsSearch.title}
+          </h1>
+          <img
+            src={ productsSearch.thumbnail }
+            alt={ productsSearch.title }
+            data-testid="product-detail-image"
+          />
+        </div>
         <span data-testid="product-detail-price">{productsSearch.price}</span>
         <button
           data-testid="product-detail-add-to-cart"
@@ -234,7 +228,7 @@ class Detalhes extends Component {
                 <p data-testid="review-card-evaluation">{item.text}</p>
               </div>
             ))}
-      </>
+      </div>
     );
   }
 }

@@ -5,9 +5,7 @@ import {
   getProductsFromCategoryAndQuery,
 } from '../services/api';
 import styles from './styles/Listagem.module.css';
-import logo from '../images/logo.png';
-import searchIcon from '../images/searchIcon.png';
-import cartImg from '../images/cart.png';
+import Header from '../components/Header';
 
 class Listagem extends React.Component {
   constructor() {
@@ -112,48 +110,14 @@ class Listagem extends React.Component {
     const { categories, productsSearch, numero, search } = this.state;
     return (
       <div>
-        <header className={ styles.header__container }>
-          <div className={ styles.search__container }>
-            <label htmlFor="search">
-              <input
-                placeholder="Digite o que você busca"
-                className={ styles.search__input }
-                type="text"
-                id="search"
-                onChange={ this.handleSearch }
-                data-testid="query-input"
-                name="search"
-              />
-            </label>
-            <input
-              className={ styles.search__icon }
-              type="image"
-              alt="search icon"
-              data-testid="query-button"
-              onClick={ this.handleClick }
-              src={ searchIcon }
-            />
-          </div>
-          <img src={ logo } alt="logo" />
-          <Link
-            className={ styles.cart__container }
-            to="/CarrinhoDeCompras"
-            data-testid="shopping-cart-button"
-          >
-            <input
-              className={ styles.cart__image }
-              type="image"
-              src={ cartImg }
-              alt="shopping cart"
-            />
-            <span
-              className={ styles.counter }
-              data-testid="shopping-cart-size"
-            >
-              { `${numero}` }
-            </span>
-          </Link>
-        </header>
+        {Header(
+          {
+            numero,
+            handleSearch: this.handleSearch,
+            handleClick: this.handleClick,
+            styles,
+          },
+        )}
         <div className={ styles.categories__container }>
           <p className={ styles.categories__title }>Categorias:</p>
           {categories.map((categoria) => (
