@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
+import { numeroDeProdutosNoCarrinho } from '../helpers/helpers';
 
 class Checkout extends React.Component {
   state = {
+    numero: 0,
     productsName: '',
     shoppingCartProducts: false,
     name: '',
@@ -16,6 +19,7 @@ class Checkout extends React.Component {
   };
 
   componentDidMount() {
+    numeroDeProdutosNoCarrinho(this);
     const getLCInfo = JSON.parse(localStorage.getItem('produtos'));
     const getLCName = getLCInfo.map((item) => item.title);
     this.setState(() => ({
@@ -63,10 +67,15 @@ class Checkout extends React.Component {
       cep,
       address,
       error,
+      numero,
     } = this.state;
 
     return (
       <div>
+        {Header({
+          amIonTheMainPage: false,
+          numero,
+        })}
         {productsName.length > 0
           && productsName.map((nameProduct, index) => (
             <div key={ index }>
