@@ -103,11 +103,10 @@ class Detalhes extends Component {
                 data-testid="product-detail-price"
               >
                 { productsSearch
+                  .price}
+                {/* && productsSearch
                   .price
-                // && productsSearch
-                //   .price
-                  // .toLocaleString('pt-br', { minimumFractionDigits: 2 })
-                }
+                  // .toLocaleString('pt-br', { minimumFractionDigits: 2 }) */}
               </p>
               <button
                 className={ styles.btn }
