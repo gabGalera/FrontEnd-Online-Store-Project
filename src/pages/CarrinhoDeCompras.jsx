@@ -4,11 +4,13 @@ import { loadShoppingCart,
   saveShoppingCart, numeroDeProdutosNoCarrinho } from '../helpers/helpers';
 import styles from './styles/CarrinhoDeCompras.module.css';
 import Header from '../components/Header';
+import deleteBtn from '../images/deleteBtn.png';
 
 class CarrinhoDeCompras extends React.Component {
   constructor() {
     super();
     this.state = {
+      total: 0,
       numero: 0,
       shoppingCart: [],
     };
@@ -19,6 +21,8 @@ class CarrinhoDeCompras extends React.Component {
     const result = loadShoppingCart();
     this.setState({
       shoppingCart: result,
+    }, () => {
+      this.totalDaCompra();
     });
   }
 
@@ -68,8 +72,20 @@ class CarrinhoDeCompras extends React.Component {
     });
   };
 
+  totalDaCompra = () => {
+    const { shoppingCart } = this.state;
+    if (shoppingCart && shoppingCart.length > 0) {
+      let total = shoppingCart.map((item) => item.quantity * item.price);
+      total = total.reduce((soma, i) => soma + i);
+
+      this.setState({
+        total,
+      });
+    }
+  };
+
   render() {
-    const { shoppingCart, numero } = this.state;
+    const { shoppingCart, numero, total } = this.state;
 
     return (
       <>
@@ -86,14 +102,14 @@ class CarrinhoDeCompras extends React.Component {
                     className={ styles.product__container }
                     key={ index }
                   >
-                    <button
-                      type="button"
+                    <input
+                      src={ deleteBtn }
+                      alt="delete button"
+                      type="image"
                       id={ produto.id }
                       onClick={ (e) => this.deleteItem(e) }
                       data-testid="remove-product"
-                    >
-                      Excluir
-                    </button>
+                    />
                     <p data-testid="shopping-cart-product-name">
                       { produto.title }
                     </p>
@@ -127,12 +143,18 @@ class CarrinhoDeCompras extends React.Component {
                 : <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
             }
           </div>
-          <Link
-            to="/checkout"
-            data-testid="checkout-products"
-          >
-            Finalizar compra
-          </Link>
+          <div>
+            <span>
+              Valor total da compra:
+              {total}
+            </span>
+            <Link
+              to="/checkout"
+              data-testid="checkout-products"
+            >
+              Finalizar compra
+            </Link>
+          </div>
         </div>
       </>
     );
