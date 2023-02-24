@@ -143,12 +143,17 @@ class CarrinhoDeCompras extends React.Component {
                 : <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
             }
           </div>
-          <div>
-            <span>
+          <div className={ styles.total__compra }>
+            <p className={ styles.total__text }>
               Valor total da compra:
-              {total}
-            </span>
+              <span>
+                R$
+                {' '}
+                {total.toLocaleString('pt-br', { minimumFractionDigits: 2 })}
+              </span>
+            </p>
             <Link
+              className={ styles.total__btn }
               to="/checkout"
               data-testid="checkout-products"
             >

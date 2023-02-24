@@ -15,3 +15,50 @@
 .container {
   display: flex;
 }
+
+.total__compra {
+  align-items: center;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  justify-content: center;
+  width: 45%;
+}
+
+.total__text {
+  align-items: center;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 20px;
+  margin-top: -10vh;
+  padding: 3%;
+  text-align: center;
+}
+
+.total__text > span {
+  margin-top: 5vh;
+}
+
+.total__btn {
+  align-items: center;
+  background: #31c28d;
+  color: white;
+  display: flex;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  height: 5vh;
+  justify-content: center;
+  line-height: 16px;
+  text-align: center;
+  text-decoration: none;
+  width: 15vw;
+}
