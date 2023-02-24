@@ -77,15 +77,25 @@ class JSX extends Component {
         <h1>Avaliações</h1>
         {avaliacao.length > 0 && avaliacao.map((item, i) => (
           <div key={ i }>
-            <p data-testid="review-card-email">{item.email}</p>
             <p
-              style={ { color: 'white' } }
+              className={ styles.email }
+              data-testid="review-card-email"
+            >
+              {item.email}
+            </p>
+            <p
+              className={ styles.stars }
               data-testid="review-card-rating"
             >
               {this.isFiveStar(item.rating)}
               {item.rating}
             </p>
-            <p data-testid="review-card-evaluation">{item.text}</p>
+            <p
+              className={ styles.text }
+              data-testid="review-card-evaluation"
+            >
+              {item.text}
+            </p>
           </div>
         ))}
       </div>

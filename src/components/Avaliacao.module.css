@@ -16,6 +16,35 @@
 }
 
 .avaliacao > div {
+  border-top: 0.5vh solid #e1e5eb;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 2vh 0;
+}
+
+.email {
+  color: black;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  margin-right: 5vw;
+}
+
+.stars {
+  color: white;
+  padding-right: 30%;
+}
+
+.text {
+  color: #94979d;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
 }
