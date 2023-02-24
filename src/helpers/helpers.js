@@ -2,6 +2,22 @@ const setStorage = ({ avaliacao, id }) => {
   localStorage.setItem(id, JSON.stringify(avaliacao));
 };
 
+const handleSearch = (obj, e) => {
+  const { value } = obj.target;
+  e.setState({
+    search: value,
+  });
+};
+
+const handleClick = async (e, getProductsFromCategoryAndQuery) => {
+  const { search } = e.state;
+  const response = await getProductsFromCategoryAndQuery('', search);
+  const { results } = response;
+  e.setState({
+    productsSearch: results,
+  });
+};
+
 const loadShoppingCart = () => JSON.parse(localStorage.getItem('produtos'));
 
 const saveShoppingCart = (product) => localStorage
@@ -96,4 +112,5 @@ const cartAdd = (target, e) => {
 
 export {
   setStorage, getStorage, loadShoppingCart, saveShoppingCart,
-  numeroDeProdutosNoCarrinho, verifyButton, cartAdd };
+  numeroDeProdutosNoCarrinho, verifyButton, cartAdd,
+  handleSearch, handleClick };

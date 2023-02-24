@@ -72,8 +72,7 @@ class Detalhes extends Component {
         {Header(
           {
             numero,
-            handleSearch: this.handleSearch,
-            handleClick: this.handleClick,
+            amIonTheMainPage: false,
           },
         )}
         <div className={ styles.container }>

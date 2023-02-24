@@ -67,3 +67,7 @@
 .cart__image {
   width: 3vw;
 }
+
+.header__container > img {
+  margin-left: 2vw;
+}

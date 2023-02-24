@@ -7,7 +7,10 @@ import {
 import styles from './styles/Listagem.module.css';
 import Header from '../components/Header';
 import {
-  cartAdd, numeroDeProdutosNoCarrinho } from '../helpers/helpers';
+  cartAdd,
+  handleSearch,
+  handleClick,
+  numeroDeProdutosNoCarrinho } from '../helpers/helpers';
 
 class Listagem extends React.Component {
   constructor() {
@@ -39,22 +42,6 @@ class Listagem extends React.Component {
     });
   };
 
-  handleClick = async () => {
-    const { search } = this.state;
-    const response = await getProductsFromCategoryAndQuery('', search);
-    const { results } = response;
-    this.setState({
-      productsSearch: results,
-    });
-  };
-
-  handleSearch = ({ target }) => {
-    const { value } = target;
-    this.setState({
-      search: value,
-    });
-  };
-
   textFunc = (search, productsSearch) => (
     search.length === 0 && productsSearch.length === 0
       ? (
@@ -72,9 +59,11 @@ class Listagem extends React.Component {
         {Header(
           {
             numero,
-            handleSearch: this.handleSearch,
-            handleClick: this.handleClick,
+            handleSearch,
+            handleClick,
+            amIonTheMainPage: true,
           },
+          this,
         )}
         <div className={ styles.categories__container }>
           <p className={ styles.categories__title }>Categorias:</p>

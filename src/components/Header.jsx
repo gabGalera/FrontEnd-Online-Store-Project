@@ -4,31 +4,37 @@ import logo from '../images/logo.png';
 import searchIcon from '../images/searchIcon.png';
 import cartImg from '../images/cart.png';
 import styles from './Header.module.css';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 
-export default function JSX({ numero, handleSearch, handleClick }) {
+export default function JSX({ numero, handleSearch, handleClick, amIonTheMainPage }, e) {
   return (
     <header className={ styles.header__container }>
-      <div className={ styles.search__container }>
-        <label htmlFor="search">
+      {amIonTheMainPage && (
+        <div className={ styles.search__container }>
+          <label htmlFor="search">
+            <input
+              placeholder="Digite o que você busca"
+              className={ styles.search__input }
+              type="text"
+              id="search"
+              onChange={ (obj) => handleSearch(obj, e) }
+              data-testid="query-input"
+              name="search"
+            />
+          </label>
           <input
-            placeholder="Digite o que você busca"
-            className={ styles.search__input }
-            type="text"
-            id="search"
-            onChange={ handleSearch }
-            data-testid="query-input"
-            name="search"
+            className={ styles.search__icon }
+            type="image"
+            alt="search icon"
+            data-testid="query-button"
+            onClick={ () => handleClick(
+              e,
+              getProductsFromCategoryAndQuery,
+            ) }
+            src={ searchIcon }
           />
-        </label>
-        <input
-          className={ styles.search__icon }
-          type="image"
-          alt="search icon"
-          data-testid="query-button"
-          onClick={ handleClick }
-          src={ searchIcon }
-        />
-      </div>
+        </div>
+      )}
       <img src={ logo } alt="logo" />
       <Link
         className={ styles.cart__container }
@@ -56,4 +62,5 @@ JSX.propTypes = {
   numero: PropTypes.number.isRequired,
   handleSearch: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  amIonTheMainPage: PropTypes.bool.isRequired,
 };
