@@ -93,15 +93,32 @@ class Detalhes extends Component {
           </div>
           <div className={ styles.container__infos }>
             {Avaliacao({ avaliacao })}
-            <span data-testid="product-detail-price">{productsSearch.price}</span>
-            <button
-              data-testid="product-detail-add-to-cart"
-              type="button"
-              value={ productsSearch.id }
-              onClick={ ({ target }) => cartAdd(target, this) }
-            >
-              Add To Cart
-            </button>
+            <div className={ styles.price }>
+              <p className={ styles.symbol }>
+                R$
+                {' '}
+              </p>
+              <p
+                className={ styles.money }
+                data-testid="product-detail-price"
+              >
+                { productsSearch
+                  .price
+                // && productsSearch
+                //   .price
+                  // .toLocaleString('pt-br', { minimumFractionDigits: 2 })
+                }
+              </p>
+              <button
+                className={ styles.btn }
+                data-testid="product-detail-add-to-cart"
+                type="button"
+                value={ productsSearch.id }
+                onClick={ ({ target }) => cartAdd(target, this) }
+              >
+                Add To Cart
+              </button>
+            </div>
           </div>
           <form>
             <label htmlFor="avaliar">

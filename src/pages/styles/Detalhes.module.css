@@ -50,12 +50,59 @@
   font-style: normal;
   font-weight: 600;
   line-height: 16px;
-  margin: -17% 80% 6% 0;
+  margin-bottom: 39%;
+  margin-right: 15%;
   padding: 1vw;
+  position: absolute;
   text-decoration: none;
   width: 20%;
 }
 
 .go__back > img {
   margin-right: 1vw;
+}
+
+.price {
+  align-items: center;
+  background: white;
+  display: flex;
+  height: 5%;
+  justify-content: space-around;
+  padding-bottom: 5%;
+  padding-right: 30%;
+  width: 70%;
+}
+
+.symbol {
+  color: #b0b3bb;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.money {
+  color: #444955;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  margin-left: -35%;
+}
+
+.btn {
+  background: #31c28d;
+  border: none;
+  color: white;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  height: 100%;
+  line-height: 16px;
+  margin-left: -20%;
+  text-align: center;
+  width: 30%;
 }
