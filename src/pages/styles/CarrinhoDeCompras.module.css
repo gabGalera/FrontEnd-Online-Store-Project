@@ -1,0 +1,16 @@
+.product__container {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.cart__container {
+  background-color: white;
+  height: 50vh;
+  margin: 10vh 10vw;
+  width: 60vw;
+}
+
+.container {
+  display: flex;
+}

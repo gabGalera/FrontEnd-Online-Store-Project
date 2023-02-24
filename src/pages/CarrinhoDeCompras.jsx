@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { loadShoppingCart, saveShoppingCart } from '../helpers/helpers';
+import styles from './styles/CarrinhoDeCompras.module.css';
 
 class CarrinhoDeCompras extends React.Component {
   constructor() {
@@ -53,21 +54,41 @@ class CarrinhoDeCompras extends React.Component {
     });
   };
 
+  deleteItem = (e) => {
+    const { shoppingCart } = this.state;
+    const aux = shoppingCart
+      .filter((entry) => entry.id !== e.target.id);
+    saveShoppingCart([...aux]);
+    this.setState({
+      shoppingCart: aux,
+    });
+  };
+
   render() {
     const { shoppingCart } = this.state;
+
     return (
-      <div>
-        {
-          shoppingCart
-            ? shoppingCart.map((produto, index) => (
-              <div key={ index }>
-                <p data-testid="shopping-cart-product-name">
-                  { produto.title }
-                </p>
-                <p>
-                  { produto.price }
-                </p>
-                <div>
+      <div className={ styles.container }>
+        <div className={ styles.cart__container }>
+          {
+            shoppingCart
+              ? shoppingCart.map((produto, index) => (
+                <div
+                  className={ styles.product__container }
+                  key={ index }
+                >
+                  <button
+                    type="button"
+                    id={ produto.id }
+                    onClick={ (e) => this.deleteItem(e) }
+                    data-testid="remove-product"
+                  >
+                    Excluir
+                  </button>
+                  <p data-testid="shopping-cart-product-name">
+                    { produto.title }
+                  </p>
+                  <img src={ produto.thumbnail } alt="product" />
                   <button
                     type="button"
                     id={ produto.id }
@@ -89,26 +110,14 @@ class CarrinhoDeCompras extends React.Component {
                   >
                     Diminuir
                   </button>
-                  <button
-                    type="button"
-                    id={ produto.id }
-                    onClick={ (e) => {
-                      const aux = shoppingCart
-                        .filter((entry) => entry.id !== e.target.id);
-                      saveShoppingCart([...aux]);
-                      this.setState({
-                        shoppingCart: aux,
-                      });
-                    } }
-                    data-testid="remove-product"
-                  >
-                    Excluir
-                  </button>
+                  <p>
+                    { produto.price }
+                  </p>
                 </div>
-              </div>
-            ))
-            : <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
-        }
+              ))
+              : <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
+          }
+        </div>
         <Link
           to="/checkout"
           data-testid="checkout-products"
