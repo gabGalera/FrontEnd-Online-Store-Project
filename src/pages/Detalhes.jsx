@@ -119,9 +119,21 @@ class Detalhes extends Component {
               </button>
             </div>
           </div>
-          <form>
-            <label htmlFor="avaliar">
+          <form className={ styles.forms }>
+            <h1>
               Avaliar
+            </h1>
+            <div className={ styles.rate__input }>
+              <input
+                className={ styles.email__input }
+                data-testid="product-detail-email"
+                type="email"
+                value={ email }
+                name="email"
+                required
+                onChange={ this.handle }
+              />
+              <p>Stars</p>
               <input
                 data-testid="1-rating"
                 type="radio"
@@ -167,28 +179,21 @@ class Detalhes extends Component {
                 type="radio"
                 onClick={ this.handleRating }
               />
-              <input
-                data-testid="product-detail-email"
-                type="email"
-                value={ email }
-                name="email"
-                required
-                onChange={ this.handle }
-              />
-              <textarea
-                data-testid="product-detail-evaluation"
-                name="comments"
-                value={ comments }
-                onChange={ this.handle }
-              />
-              <button
-                type="button"
-                data-testid="submit-review-btn"
-                onClick={ () => verifyButton(this) }
-              >
-                Enviar
-              </button>
-            </label>
+            </div>
+            <textarea
+              data-testid="product-detail-evaluation"
+              name="comments"
+              value={ comments }
+              onChange={ this.handle }
+            />
+            <button
+              className={ styles.forms__btn }
+              type="button"
+              data-testid="submit-review-btn"
+              onClick={ () => verifyButton(this) }
+            >
+              Enviar
+            </button>
             {result && <p data-testid="error-msg">Campos inválidos</p>}
           </form>
         </div>
