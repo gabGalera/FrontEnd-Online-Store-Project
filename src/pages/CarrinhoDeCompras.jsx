@@ -5,6 +5,8 @@ import { loadShoppingCart,
 import styles from './styles/CarrinhoDeCompras.module.css';
 import Header from '../components/Header';
 import deleteBtn from '../images/deleteBtn.png';
+import minus from '../images/minus.png';
+import plus from '../images/plus.png';
 
 class CarrinhoDeCompras extends React.Component {
   constructor() {
@@ -114,27 +116,27 @@ class CarrinhoDeCompras extends React.Component {
                       { produto.title }
                     </p>
                     <img src={ produto.thumbnail } alt="product" />
-                    <button
-                      type="button"
+                    <input
+                      src={ minus }
+                      type="image"
+                      alt="decrease"
                       id={ produto.id }
-                      onClick={ this.addItem }
-                      data-testid="product-increase-quantity"
-                    >
-                      Somar
-                    </button>
+                      onClick={ this.removeItem }
+                      data-testid="product-decrease-quantity"
+                    />
                     <p data-testid="shopping-cart-product-quantity">
                       {
                         produto.quantity
                       }
                     </p>
-                    <button
-                      type="button"
+                    <input
+                      src={ plus }
+                      type="image"
+                      alt="increase"
                       id={ produto.id }
-                      onClick={ this.removeItem }
-                      data-testid="product-decrease-quantity"
-                    >
-                      Diminuir
-                    </button>
+                      onClick={ this.addItem }
+                      data-testid="product-increase-quantity"
+                    />
                     <p>
                       { produto.price }
                     </p>
