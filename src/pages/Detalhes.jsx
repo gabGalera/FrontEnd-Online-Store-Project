@@ -92,7 +92,7 @@ class Detalhes extends Component {
             />
           </div>
           <div className={ styles.container__infos }>
-            {Avaliacao({ avaliacao })}
+            <Avaliacao avaliacao={ avaliacao } />
             <div className={ styles.price }>
               <p className={ styles.symbol }>
                 R$
