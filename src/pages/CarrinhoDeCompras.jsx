@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import deleteBtn from '../images/deleteBtn.png';
 import minus from '../images/minus.png';
 import plus from '../images/plus.png';
+import goBack from '../images/goBack.png';
 
 class CarrinhoDeCompras extends React.Component {
   constructor() {
@@ -96,7 +97,12 @@ class CarrinhoDeCompras extends React.Component {
           amIonTheMainPage: false,
         })}
         <div className={ styles.container }>
+          <Link to="/" className={ styles.go__back }>
+            <img src={ goBack } alt="return" />
+            Voltar
+          </Link>
           <div className={ styles.cart__container }>
+            <h1>Carrinho de compras</h1>
             {
               shoppingCart
                 ? shoppingCart.map((produto, index) => (
@@ -112,10 +118,13 @@ class CarrinhoDeCompras extends React.Component {
                       onClick={ (e) => this.deleteItem(e) }
                       data-testid="remove-product"
                     />
-                    <p data-testid="shopping-cart-product-name">
+                    <img src={ produto.thumbnail } alt="product" />
+                    <p
+                      className={ styles.product__title }
+                      data-testid="shopping-cart-product-name"
+                    >
                       { produto.title }
                     </p>
-                    <img src={ produto.thumbnail } alt="product" />
                     <input
                       src={ minus }
                       type="image"
@@ -124,7 +133,10 @@ class CarrinhoDeCompras extends React.Component {
                       onClick={ this.removeItem }
                       data-testid="product-decrease-quantity"
                     />
-                    <p data-testid="shopping-cart-product-quantity">
+                    <p
+                      className={ styles.product__quantity }
+                      data-testid="shopping-cart-product-quantity"
+                    >
                       {
                         produto.quantity
                       }
@@ -137,8 +149,16 @@ class CarrinhoDeCompras extends React.Component {
                       onClick={ this.addItem }
                       data-testid="product-increase-quantity"
                     />
-                    <p>
-                      { produto.price }
+                    <p
+                      className={ styles.product__price }
+                    >
+                      R$
+                      {' '}
+                      {
+                        produto
+                          .price
+                          .toLocaleString('pt-br', { minimumFractionDigits: 2 })
+                      }
                     </p>
                   </div>
                 ))
