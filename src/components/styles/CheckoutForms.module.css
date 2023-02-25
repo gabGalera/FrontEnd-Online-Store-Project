@@ -1,5 +1,105 @@
 .checkout__forms {
   background-color: white;
-  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  justify-content: space-evenly;
+  padding: 5vh 5vw;
   width: 60vw;
+}
+
+.text__inputs {
+  background: white;
+  border: 1px solid #94979d;
+  margin: 5px;
+  padding: 10px;
+  width: 40%;
+}
+
+.text__inputs::placeholder {
+  color: #94979d;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.cep__input {
+  background: white;
+  border: 1px solid #94979d;
+  margin: 5px;
+  padding: 10px;
+  width: 20%;
+}
+
+.cep__input::placeholder {
+  color: #94979d;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.address__input {
+  background: white;
+  border: 1px solid #94979d;
+  margin: 5px;
+  padding: 10px;
+  width: 60%;
+}
+
+.address__input::placeholder {
+  color: #94979d;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.checkout__forms > h1 {
+  color: black;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  padding: 10px;
+
+}
+
+.metodos {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+
+.metodos > label {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.metodos > label > img {
+  margin: 10px;
+}
+
+.btn {
+  align-self: center;
+  background: #31c28d;
+  border: none;
+  color: white;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  height: 5vh;
+  left: 60vw;
+  line-height: 16px;
+  margin: 10px;
+  text-align: center;
+  width: 20vw;
 }
