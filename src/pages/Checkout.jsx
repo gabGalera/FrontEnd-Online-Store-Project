@@ -50,7 +50,9 @@ class Checkout extends React.Component {
               key={ index }
             >
               <img src={ nameProduct.thumbnail } alt="product" />
-              <span>
+              <span
+                className={ styles.product__title }
+              >
                 {nameProduct.title}
               </span>
               <span
