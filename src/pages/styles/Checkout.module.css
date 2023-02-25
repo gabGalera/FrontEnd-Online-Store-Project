@@ -13,7 +13,7 @@
   margin: 10vh 3vw 2vh;
   overflow-y: scroll;
   padding: 5vh 5vw;
-  width: 50vw;
+  width: 40vw;
 }
 
 .go__back {
@@ -32,4 +32,17 @@
 
 .go__back > img {
   margin-right: 1vw;
+}
+
+.product__price {
+  color: #444955;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.container {
+  display: flex;
 }

@@ -40,9 +40,10 @@ class Checkout extends React.Component {
           <img src={ goBack } alt="return" />
           Voltar
         </Link>
-        <div className={ styles.cart__container }>
-          <h1>Revise seus produtos</h1>
-          {productsName
+        <div className={ styles.container }>
+          <div className={ styles.cart__container }>
+            <h1>Revise seus produtos</h1>
+            {productsName
           && productsName.map((nameProduct, index) => (
             <div
               className={ styles.product__container }
@@ -52,13 +53,20 @@ class Checkout extends React.Component {
               <span>
                 {nameProduct.title}
               </span>
-              <span>
-                {nameProduct.price}
+              <span
+                className={ styles.product__price }
+              >
+                R$
+                {' '}
+                {nameProduct
+                  .price
+                  .toLocaleString('pt-br', { minimumFractionDigits: 2 })}
               </span>
             </div>
           ))}
+          </div>
+          <CheckoutForms history={ history } />
         </div>
-        <CheckoutForms history={ history } />
       </>
     );
   }

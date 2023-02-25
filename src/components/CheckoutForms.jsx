@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styles from './styles/CheckoutForms.module.css';
 
 class CheckoutForms extends Component {
   constructor() {
@@ -51,156 +52,136 @@ class CheckoutForms extends Component {
   render() {
     const { name, email, cpf, phoneNumber, cep, address, error } = this.state;
     return (
-      <form>
-        <div>
-          <label htmlFor="name">
-            <input
-              data-testid="checkout-fullname"
-              placeholder="Nome completo"
-              required
-              type="text"
-              name="name"
-              id="name"
-              value={ name }
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="email">
-            <input
-              data-testid="checkout-email"
-              placeholder="E-mail"
-              required
-              type="text"
-              name="email"
-              id="email"
-              value={ email }
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="cpf">
-            <input
-              data-testid="checkout-cpf"
-              placeholder="CPF"
-              type="text"
-              required
-              name="cpf"
-              id="cpf"
-              value={ cpf }
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="phoneNumber">
-            <input
-              data-testid="checkout-phone"
-              placeholder="Número de telefone"
-              type="text"
-              required
-              name="phoneNumber"
-              id="phoneNumber"
-              value={ phoneNumber }
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="cep">
-            <input
-              data-testid="checkout-cep"
-              placeholder="CEP"
-              type="text"
-              required
-              name="cep"
-              id="cep"
-              value={ cep }
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="address">
-            <input
-              data-testid="checkout-address"
-              placeholder="Endereço"
-              type="text"
-              name="address"
-              required
-              id="address"
-              value={ address }
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="ticketPayment">
-            Boleto
-            <input
-              data-testid="ticket-payment"
-              required
-              type="radio"
-              name="payment"
-              id="ticket"
-              value="ticket"
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="visa">
-            Visa
-            <input
-              data-testid="visa-payment"
-              required
-              type="radio"
-              name="payment"
-              id="visa"
-              value="visa"
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="masterCard">
-            MasterCard
-            <input
-              data-testid="master-payment"
-              required
-              type="radio"
-              name="payment"
-              id="masterCard"
-              value="masterCard"
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="elo">
-            Elo
-            <input
-              data-testid="elo-payment"
-              required
-              type="radio"
-              name="payment"
-              id="elo"
-              value="elo"
-              onChange={ this.onInputChange }
-            />
-          </label>
-        </div>
-        <div>
-          <button
-            type="button"
-            data-testid="checkout-btn"
-            onClick={ this.onClickFinishButton }
-          >
-            Finalizar
-          </button>
-        </div>
+      <form
+        className={ styles.checkout__forms }
+      >
+        <label htmlFor="name">
+          <input
+            data-testid="checkout-fullname"
+            placeholder="Nome completo"
+            required
+            type="text"
+            name="name"
+            id="name"
+            value={ name }
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="email">
+          <input
+            data-testid="checkout-email"
+            placeholder="E-mail"
+            required
+            type="text"
+            name="email"
+            id="email"
+            value={ email }
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="cpf">
+          <input
+            data-testid="checkout-cpf"
+            placeholder="CPF"
+            type="text"
+            required
+            name="cpf"
+            id="cpf"
+            value={ cpf }
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="phoneNumber">
+          <input
+            data-testid="checkout-phone"
+            placeholder="Número de telefone"
+            type="text"
+            required
+            name="phoneNumber"
+            id="phoneNumber"
+            value={ phoneNumber }
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="cep">
+          <input
+            data-testid="checkout-cep"
+            placeholder="CEP"
+            type="text"
+            required
+            name="cep"
+            id="cep"
+            value={ cep }
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="address">
+          <input
+            data-testid="checkout-address"
+            placeholder="Endereço"
+            type="text"
+            name="address"
+            required
+            id="address"
+            value={ address }
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="ticketPayment">
+          Boleto
+          <input
+            data-testid="ticket-payment"
+            required
+            type="radio"
+            name="payment"
+            id="ticket"
+            value="ticket"
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="visa">
+          Visa
+          <input
+            data-testid="visa-payment"
+            required
+            type="radio"
+            name="payment"
+            id="visa"
+            value="visa"
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="masterCard">
+          MasterCard
+          <input
+            data-testid="master-payment"
+            required
+            type="radio"
+            name="payment"
+            id="masterCard"
+            value="masterCard"
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <label htmlFor="elo">
+          Elo
+          <input
+            data-testid="elo-payment"
+            required
+            type="radio"
+            name="payment"
+            id="elo"
+            value="elo"
+            onChange={ this.onInputChange }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="checkout-btn"
+          onClick={ this.onClickFinishButton }
+        >
+          Finalizar
+        </button>
         {error && <p data-testid="error-msg">Campos inválidos</p>}
       </form>
     );
