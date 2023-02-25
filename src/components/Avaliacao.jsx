@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import styles from './Avaliacao.module.css';
+import styles from './styles/Avaliacao.module.css';
 import fullStar from '../images/fullStar.png';
 import star from '../images/star.png';
 

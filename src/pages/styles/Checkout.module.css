@@ -1,0 +1,35 @@
+.product__container {
+  align-items: center;
+  border-top: 0.4vh solid #94979d;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1vw;
+}
+
+.cart__container {
+  background-color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  height: 60vh;
+  margin: 10vh 3vw 2vh;
+  overflow-y: scroll;
+  padding: 5vh 5vw;
+  width: 50vw;
+}
+
+.go__back {
+  color: #2fc18c;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+  margin: 2vw;
+  margin-left: 3vw;
+  position: absolute;
+  text-decoration: none;
+  width: 20%;
+}
+
+.go__back > img {
+  margin-right: 1vw;
+}

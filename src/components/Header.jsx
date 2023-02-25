@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import logo from '../images/logo.png';
 import searchIcon from '../images/searchIcon.png';
 import cartImg from '../images/cart.png';
-import styles from './Header.module.css';
+import styles from './styles/Header.module.css';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
 export default function JSX({ numero, handleSearch, handleClick, amIonTheMainPage }, e) {
