@@ -13,6 +13,7 @@ class Checkout extends React.Component {
 
     this.state = {
       numero: 0,
+      total: 0,
       productsName: '',
     };
   }
@@ -22,12 +23,26 @@ class Checkout extends React.Component {
     const getLCInfo = JSON.parse(localStorage.getItem('produtos'));
     this.setState(() => ({
       productsName: getLCInfo,
-    }));
+    }), () => {
+      this.totalDaCompra();
+    });
   }
+
+  totalDaCompra = () => {
+    const { productsName } = this.state;
+    if (productsName && productsName.length > 0) {
+      let total = productsName.map((item) => item.quantity * item.price);
+      total = total.reduce((soma, i) => soma + i);
+
+      this.setState({
+        total,
+      });
+    }
+  };
 
   render() {
     const {
-      productsName, numero,
+      productsName, numero, total,
     } = this.state;
     const { history } = this.props;
     return (
@@ -66,6 +81,14 @@ class Checkout extends React.Component {
               </span>
             </div>
           ))}
+            <p className={ styles.total__text }>
+              <span>
+                Total:
+                R$
+                {' '}
+                {total.toLocaleString('pt-br', { minimumFractionDigits: 2 })}
+              </span>
+            </p>
           </div>
           <CheckoutForms history={ history } />
         </div>

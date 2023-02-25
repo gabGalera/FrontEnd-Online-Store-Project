@@ -103,3 +103,7 @@
   text-align: center;
   width: 20vw;
 }
+
+.btn:hover {
+  cursor: pointer;
+}
